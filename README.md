@@ -1,9 +1,8 @@
-Here’s the `README.md` content formatted so you can copy it directly:
 
-```markdown
+
 # Flask Teacher Management System
 
-This project is a simple Flask-based web application that allows users to add and view teacher records. It demonstrates basic form handling, database interaction, and static file management in a Flask application.
+This project is a simple Flask-based web application that allows users to add and view teacher records. It demonstrates basic form handling, database interaction, and static files management in a Flask application.
 
 ## Prerequisites
 
@@ -55,7 +54,7 @@ app.config['MYSQL_PASSWORD'] = 'your_mysql_password'
 app.config['MYSQL_DB'] = 'teacher_management'
 ```
 
-Replace `'your_mysql_username'`, `'your_mysql_password'`, and `'teacher_management'` with your actual MySQL details.
+You can change the `'your_mysql_username'`, `'your_mysql_password'`, and `'teacher_management'` to match your database details.
 
 ### 4. **Run the Application**
 
@@ -99,6 +98,6 @@ project-directory/
 ### Notes:
 - Ensure your MySQL server is running before starting the Flask application.
 - Use appropriate credentials in `app.py` for connecting to the database.
-```
 
-You can copy and paste this into your `README.md` file directly. Let me know if you need any more adjustments!
+---
+
