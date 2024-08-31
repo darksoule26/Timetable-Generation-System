@@ -1,7 +1,9 @@
 from flask import Flask, request, jsonify, render_template
 import mysql.connector
 
+
 app = Flask(__name__)
+
 
 # Function to connect to the MySQL database
 def get_db_connection():
@@ -16,6 +18,13 @@ def get_db_connection():
 @app.route('/')
 def index():
     return render_template('index.html')
+
+# Route for Add/Remove Teacher page
+@app.route('/add_remove_teacher')
+def add_remove_teacher():
+    return render_template('add_remove_teacher.html')
+
+
 
 @app.route('/add_teacher', methods=['POST'])
 def add_teacher():
