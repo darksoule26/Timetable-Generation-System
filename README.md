@@ -28,7 +28,7 @@ pip install flask
 - Create a new MySQL database. You can use the following SQL command in your MySQL shell:
 
     ```sql
-    CREATE DATABASE teacher_management;
+    CREATE DATABASE school;
     ```
 
 - Create the necessary tables by executing the following SQL commands:
