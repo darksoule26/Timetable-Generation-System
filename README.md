@@ -64,7 +64,7 @@ app.config['MYSQL_PASSWORD'] = 'your_mysql_password'
 app.config['MYSQL_DB'] = 'teacher_management'
 ```
 
-You can change the `'your_mysql_username'`, `'your_mysql_password'`, and `'teacher_management'` to match your database details.
+You can change the `'your_mysql_username'`, `'your_mysql_password'`, and `'school'` to match your database details.
 
 ### 4. **Run the Application**
 
