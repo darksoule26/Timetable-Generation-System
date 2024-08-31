@@ -236,23 +236,48 @@
             <input type="number" id="class-lab-count" name="class-lab-count" placeholder="Enter number of classes or labs per week" min="1" required>
 
             <button id="save-teacher">Save Teacher</button>
+            
 
             <!-- Message Display -->
             <div class="message" id="message"></div>
-        </div>
+            <!-- Button to View Teachers Record -->
+        <button id="view-teachers">View Teachers Record</button>
+
+        <!-- Message Display -->
+        <div class="message" id="message"></div>
+
+        <!-- Table to Display Teachers Records -->
+        <table id="teachers-table" style="display: none;">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Subject</th>
+                    <th>Class</th>
+                    <th>Type</th>
+                    <th>Classes/Labs per Week</th>
+                </tr>
+            </thead>
+            <tbody id="teachers-table-body">
+                <!-- Records will be injected here -->
+            </tbody>
+        </table>
     </div>
 
     <script>
+        // Toggle Class Buttons
         document.getElementById('start-button').addEventListener('click', function() {
             var classButtons = document.getElementById('class-buttons');
             classButtons.style.display = classButtons.style.display === 'none' || classButtons.style.display === '' ? 'flex' : 'none';
         });
-
+    
+        // Toggle Add/Remove Teacher Form
         document.getElementById('add-remove-teacher-button').addEventListener('click', function() {
             var formContainer = document.getElementById('form-container');
             formContainer.style.display = formContainer.style.display === 'none' || formContainer.style.display === '' ? 'block' : 'none';
         });
-
+    
+        // Save Teacher to Database
         document.getElementById('save-teacher').addEventListener('click', function() {
             var name = document.getElementById('teacher-name').value;
             var subject = document.getElementById('subject').value;
@@ -260,13 +285,13 @@
             var classLabType = document.getElementById('class-lab-type').value;
             var classLabCount = document.getElementById('class-lab-count').value;
             var messageBox = document.getElementById('message');
-
+    
             if (!name || !subject || !teacherClass || !classLabType || !classLabCount) {
                 messageBox.textContent = 'Please fill in all fields.';
                 messageBox.classList.add('error');
                 return;
             }
-
+    
             fetch('/add_teacher', {
                 method: 'POST',
                 headers: {
@@ -298,6 +323,46 @@
                 messageBox.classList.add('error');
             });
         });
+    
+        // View Teachers Record
+        document.getElementById('view-teachers').addEventListener('click', function() {
+            fetch('/get_teachers', {
+                method: 'GET',
+            })
+            .then(response => response.json())
+            .then(teachers => {
+                var table = document.getElementById('teachers-table');
+                var tbody = document.getElementById('teachers-table-body');
+    
+                // Clear previous data
+                tbody.innerHTML = '';
+    
+                // Populate table with fetched data
+                teachers.forEach(function(teacher) {
+                    var row = document.createElement('tr');
+    
+                    row.innerHTML = `
+                        <td>${teacher.id}</td>
+                        <td>${teacher.name}</td>
+                        <td>${teacher.subject}</td>
+                        <td>${teacher.class}</td>
+                        <td>${teacher.type}</td>
+                        <td>${teacher.class_lab_count}</td>
+                    `;
+    
+                    tbody.appendChild(row);
+                });
+    
+                // Show the table if hidden
+                table.style.display = 'table';
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                document.getElementById('message').textContent = 'Failed to fetch teacher records.';
+                document.getElementById('message').classList.add('error');
+            });
+        });
     </script>
+    
 </body>
 </html>
