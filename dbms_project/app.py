@@ -1,12 +1,16 @@
 from flask import Flask, request, jsonify, render_template
-import sqlite3
+import mysql.connector
 
 app = Flask(__name__)
 
-# Function to connect to the database
+# Function to connect to the MySQL database
 def get_db_connection():
-    conn = sqlite3.connect('school.db')
-    conn.row_factory = sqlite3.Row
+    conn = mysql.connector.connect(
+        host='localhost',
+        user='root',  # Replace with your MySQL username
+        password='root',  # Replace with your MySQL password
+        database='school'
+    )
     return conn
 
 @app.route('/')
@@ -23,33 +27,33 @@ def add_teacher():
     class_lab_count = data.get('class_lab_count')
 
     try:
-        conn = sqlite3.connect('database.db')
+        conn = get_db_connection()
         cursor = conn.cursor()
         
         cursor.execute('''
             INSERT INTO teachers (name, subject, class, type, class_lab_count)
-            VALUES (?, ?, ?, ?, ?)
+            VALUES (%s, %s, %s, %s, %s)
         ''', (name, subject, teacher_class, class_lab_type, class_lab_count))
         
         conn.commit()
+        cursor.close()
         conn.close()
         
         return jsonify({'status': 'success'}), 200
-    except sqlite3.IntegrityError as e:
-        return jsonify({'status': 'failure', 'reason': str(e)}), 500
+    except mysql.connector.Error as err:
+        return jsonify({'status': 'failure', 'reason': str(err)}), 500
 
 @app.route('/get_teachers', methods=['GET'])
 def get_teachers():
     conn = get_db_connection()
-    cursor = conn.cursor()
+    cursor = conn.cursor(dictionary=True)
 
     cursor.execute("SELECT * FROM teachers")
     teachers = cursor.fetchall()
+    cursor.close()
     conn.close()
 
-    teachers_list = [dict(row) for row in teachers]
-    
-    return jsonify(teachers_list)
+    return jsonify(teachers)
 
 if __name__ == '__main__':
     app.run(debug=True)
