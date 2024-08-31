@@ -43,6 +43,16 @@ pip install flask
         class_lab_count INT NOT NULL
     );
     ```
+    ```sql
+    CREATE TABLE tyb (
+       id INT AUTO_INCREMENT PRIMARY KEY,
+       teacher_name VARCHAR(100) NOT NULL,
+       subject VARCHAR(100) NOT NULL,
+       lecture_type VARCHAR(50) NOT NULL,
+       lecture_count INT NOT NULL
+    );
+
+    ```
 
 ### 3. **Update Database Configuration**
 
