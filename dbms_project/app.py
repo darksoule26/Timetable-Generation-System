@@ -64,5 +64,34 @@ def get_teachers():
 
     return jsonify(teachers)
 
+@app.route('/tyb_teachers')
+def tyb_teachers():
+    return render_template('tyb_teachers.html')
+
+@app.route('/add_teacher_to_tyb', methods=['POST'])
+def add_teacher_to_tyb():
+    data = request.json
+    name = data.get('name')
+    subject = data.get('subject')
+    lecture_type = data.get('lecture_type')
+    lecture_count = data.get('lecture_count')
+    
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        query = """
+            INSERT INTO tyb (teacher_name, subject, lecture_type, lecture_count) 
+            VALUES (%s, %s, %s, %s)
+        """
+        cursor.execute(query, (name, subject, lecture_type, lecture_count))
+        conn.commit()
+        cursor.close()
+        return jsonify({'status': 'success'}), 200
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify({'status': 'fail', 'error': str(e)}), 500
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)
