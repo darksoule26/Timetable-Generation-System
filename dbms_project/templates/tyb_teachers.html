@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TY B Teacher Management</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h3>Add Teacher for TY B</h3>
+        <form id="tyb-teacher-form">
+            <label for="teacher-name">Teacher Name:</label>
+            <input type="text" id="teacher-name" name="teacher-name" placeholder="Enter teacher's name" required>
+
+            <label for="subject">Subject Teaching:</label>
+            <input type="text" id="subject" name="subject" placeholder="Enter subject" required>
+
+            <label for="lecture-type">Type of Lecture:</label>
+            <select id="lecture-type" name="lecture-type" required>
+                <option value="">Select Type</option>
+                <option value="class">Class</option>
+                <option value="lab">Lab</option>
+            </select>
+
+            <label for="lecture-count">Number of Lectures per Week:</label>
+            <input type="number" id="lecture-count" name="lecture-count" placeholder="Enter number of lectures per week" min="1" required>
+
+            <button type="submit" id="save-teacher">Save Teacher</button>
+        </form>
+
+        <!-- Message Display -->
+        <div class="message" id="message"></div>
+
+        <button onclick="window.location.href='/'">Back to Main Page</button>
+
+        <script>
+            // Save Teacher to Database
+            document.getElementById('tyb-teacher-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                var name = document.getElementById('teacher-name').value;
+                var subject = document.getElementById('subject').value;
+                var lectureType = document.getElementById('lecture-type').value;
+                var lectureCount = document.getElementById('lecture-count').value;
+                var messageBox = document.getElementById('message');
+
+                if (!name || !subject || !lectureType || !lectureCount) {
+                    messageBox.textContent = 'Please fill in all fields.';
+                    messageBox.classList.add('error');
+                    return;
+                }
+
+                fetch('/add_teacher_to_tyb', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        subject: subject,
+                        lecture_type: lectureType,
+                        lecture_count: lectureCount
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        messageBox.textContent = 'Teacher added successfully!';
+                        messageBox.classList.remove('error');
+                        messageBox.classList.add('success');
+                    } else {
+                        messageBox.textContent = 'Failed to add teacher.';
+                        messageBox.classList.remove('success');
+                        messageBox.classList.add('error');
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    messageBox.textContent = 'An error occurred. Please try again later.';
+                    messageBox.classList.add('error');
+                });
+            });
+        </script>
+    </div>
+</body>
+</html>
