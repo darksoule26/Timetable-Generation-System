@@ -23,7 +23,7 @@
                     <button>SY A</button>
                     <button>SY B</button>
                     <button>TY A</button>
-                    <button>TY B</button>
+                    <button id="tyb-button">TY B</button>
                     <button>BE A</button>
                     <button>BE B</button>
                 </div>
@@ -42,6 +42,9 @@
             var classButtons = document.getElementById('class-buttons');
             classButtons.style.display = classButtons.style.display === 'none' || classButtons.style.display === '' ? 'flex' : 'none';
         });
+        document.getElementById('tyb-button').addEventListener('click', function() {
+        window.location.href = '/tyb_teachers'; // Redirect to the TY B teacher management page
+    });
     </script>
 </body>
 </html>
