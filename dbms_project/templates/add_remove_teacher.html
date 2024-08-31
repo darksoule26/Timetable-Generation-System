@@ -4,179 +4,106 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add/Remove Teacher</title>
-    
+    <link rel="stylesheet" href="/static/styles.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #F1F1D3;
-            margin: 0;
-            padding: 0;
-        }
+        h3 {
+    text-align: center;
+    font-size: 36px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
 
-        .container {
-            width: 80%;
-            margin: auto;
-            border: 2px solid black;
-            padding: 20px;
-            background-color: #EEF1E1;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-        }
+label {
+    display: block;
+    font-weight: bold;
+    margin: 10px 0 5px;
+}
 
-        .header {
-            text-align: center;
-            font-size: 36px;
-            font-weight: bold;
-            padding: 20px 0;
-            color: #333;
-        }
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    border: 1px solid #6F9873;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
 
-        .content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+button {
+    padding: 15px;
+    font-size: 18px;
+    background-color: #6F9873;
+    color: black;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+    margin-bottom: 10px;
+}
 
-        .left-panel, .right-panel {
-            width: 30%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 300px;
-        }
+button:hover {
+    background-color: #5B7F5A;
+}
 
-        .left-panel button, .right-panel button {
-            padding: 15px;
-            font-size: 18px;
-            background-color: #6F9873;
-            color: black;
-            border: none;
-            border-radius: 15px;
-            cursor: pointer;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s ease;
-        }
+.message {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 10px 0;
+}
 
-        .left-panel button:hover, .right-panel button:hover {
-            background-color: #5B7F5A;
-        }
+.message.error {
+    color: red;
+}
 
-        .center-panel {
-            text-align: center;
-        }
+.message.success {
+    color: green;
+}
 
-        .center-panel button {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background: linear-gradient(120deg, #5EF974, #FFD7D7, #94F6DA);
-            color: black;
-            font-size: 20px;
-            font-weight: bold;
-            border: none;
-            cursor: pointer;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-            transition: background 0.3s ease;
-        }
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
 
-        .center-panel button:hover {
-            background: linear-gradient(120deg, #58E16A, #FFB4B4, #72EBC6);
-        }
+table, th, td {
+    border: 1px solid black;
+}
 
-        .class-buttons {
-            display: none;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 20px;
-        }
+th, td {
+    padding: 10px;
+    text-align: left;
+    font-size: 16px;
+}
 
-        .class-buttons button {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background: linear-gradient(120deg, #FFD7D7, #FFB4B4);
-            color: black;
-            font-size: 16px;
-            font-weight: bold;
-            border: none;
-            cursor: pointer;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-            transition: background 0.3s ease;
-        }
+th {
+    background-color: #6F9873;
+    color: white;
+}
 
-        .class-buttons button:hover {
-            background: linear-gradient(120deg, #FFB4B4, #FF9090);
-        }
+button#view-teachers {
+    margin-top: 20px;
+    width: 100%;
+}
 
-        .form-container {
-            display: none;
-            margin-top: 20px;
-            padding: 20px;
-            border: 2px solid #6F9873;
-            border-radius: 15px;
-            background-color: #EEF1E1;
-        }
+@media (max-width: 768px) {
+    .container {
+        width: 100%;
+        padding: 10px;
+    }
 
-        .form-container label, .form-container input, .form-container select {
-            display: block;
-            margin: 10px 0;
-            width: 100%;
-        }
+    h3 {
+        font-size: 28px;
+    }
 
-        .form-container input, .form-container select {
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #6F9873;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-
-        .form-container button {
-            padding: 10px;
-            font-size: 16px;
-            background-color: #6F9873;
-            color: black;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: background-color 0.3s ease;
-        }
-
-        .form-container button:hover {
-            background-color: #5B7F5A;
-        }
-
-        .form-container .message {
-            margin-top: 10px;
-            font-size: 16px;
-            font-weight: bold;
-            color: green;
-        }
-
-        .form-container .error {
-            color: red;
-        }
-
-        @media (max-width: 768px) {
-            .content {
-                flex-direction: column;
-            }
-
-            .left-panel, .right-panel {
-                width: 100%;
-                height: auto;
-                margin-bottom: 20px;
-            }
-
-            .center-panel button {
-                width: 120px;
-                height: 120px;
-            }
-        }
+    button {
+        padding: 10px;
+        font-size: 16px;
+    }
+}
     </style>
-
 </head>
 <body>
     <div class="container">
@@ -215,6 +142,26 @@
         <!-- Message Display -->
         <div class="message" id="message"></div>
 
+        <!-- View Teachers Button -->
+        <button id="view-teachers">View Teacher Records</button>
+
+        <!-- Table to Display Teachers Records -->
+        <table id="teachers-table" style="display: none; margin-top: 20px; border: 1px solid black; width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th style="border: 1px solid black; padding: 10px;">ID</th>
+                    <th style="border: 1px solid black; padding: 10px;">Name</th>
+                    <th style="border: 1px solid black; padding: 10px;">Subject</th>
+                    <th style="border: 1px solid black; padding: 10px;">Class</th>
+                    <th style="border: 1px solid black; padding: 10px;">Type</th>
+                    <th style="border: 1px solid black; padding: 10px;">Classes/Labs per Week</th>
+                </tr>
+            </thead>
+            <tbody id="teachers-table-body">
+                <!-- Records will be injected here -->
+            </tbody>
+        </table>
+
         <button onclick="window.location.href='/'">Back to Main Page</button>
 
         <script>
@@ -228,12 +175,6 @@
                 var classLabType = document.getElementById('class-lab-type').value;
                 var classLabCount = document.getElementById('class-lab-count').value;
                 var messageBox = document.getElementById('message');
-
-                if (!name || !subject || !teacherClass || !classLabType || !classLabCount) {
-                    messageBox.textContent = 'Please fill in all fields.';
-                    messageBox.classList.add('error');
-                    return;
-                }
 
                 fetch('/add_teacher', {
                     method: 'POST',
@@ -264,6 +205,45 @@
                     console.error('Error:', error);
                     messageBox.textContent = 'An error occurred. Please try again later.';
                     messageBox.classList.add('error');
+                });
+            });
+
+            // View Teacher Records
+            document.getElementById('view-teachers').addEventListener('click', function() {
+                fetch('/get_teachers', {
+                    method: 'GET',
+                })
+                .then(response => response.json())
+                .then(teachers => {
+                    var table = document.getElementById('teachers-table');
+                    var tbody = document.getElementById('teachers-table-body');
+    
+                    // Clear previous data
+                    tbody.innerHTML = '';
+    
+                    // Populate table with fetched data
+                    teachers.forEach(function(teacher) {
+                        var row = document.createElement('tr');
+    
+                        row.innerHTML = `
+                            <td style="border: 1px solid black; padding: 10px;">${teacher.id}</td>
+                            <td style="border: 1px solid black; padding: 10px;">${teacher.name}</td>
+                            <td style="border: 1px solid black; padding: 10px;">${teacher.subject}</td>
+                            <td style="border: 1px solid black; padding: 10px;">${teacher.class}</td>
+                            <td style="border: 1px solid black; padding: 10px;">${teacher.class_lab_type}</td>
+                            <td style="border: 1px solid black; padding: 10px;">${teacher.class_lab_count}</td>
+                        `;
+    
+                        tbody.appendChild(row);
+                    });
+    
+                    // Show the table if hidden
+                    table.style.display = 'table';
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    document.getElementById('message').textContent = 'Failed to fetch teacher records.';
+                    document.getElementById('message').classList.add('error');
                 });
             });
         </script>
